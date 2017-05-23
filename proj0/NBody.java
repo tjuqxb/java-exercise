@@ -38,6 +38,7 @@ public class NBody{
         for(int i = 0;i<Planets.length;i++){
             Planets[i].draw();
         }
+        StdAudio.loop("audio/2001.mid");
         double time = 0;
         while(time<T){
 
@@ -58,5 +59,12 @@ public class NBody{
             time = time + dt;
 
         }
+        StdOut.printf("%d\n", Planets.length);
+        StdOut.printf("%.2e\n", Radius);
+        for (int i = 0; i < Planets.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                    Planets[i].xxPos, Planets[i].yyPos, Planets[i].xxVel, Planets[i].yyVel, Planets[i].mass, Planets[i].imgFileName);
+        }
+
     }
 }
