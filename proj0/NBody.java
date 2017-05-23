@@ -26,4 +26,14 @@ public class NBody{
 
 
     }
+    public static void main(String args[]){
+        double T = args[0];
+        double dt = args[1];
+        String filename = args[2];
+        double Radidus = readRadius(filename);
+        Planet[] Planets = readPlanets(filename);
+
+
+
+    }
 }
