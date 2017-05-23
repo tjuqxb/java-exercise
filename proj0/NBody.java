@@ -27,13 +27,36 @@ public class NBody{
 
     }
     public static void main(String args[]){
-        double T = args[0];
-        double dt = args[1];
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
         String filename = args[2];
-        double Radidus = readRadius(filename);
+        double Radius = readRadius(filename);
         Planet[] Planets = readPlanets(filename);
+        StdDraw.setScale(-Radius,Radius);
+        StdDraw.picture(0,0,"/images/starfield.jpg",2*Radius,2*Radius);
 
+        for(int i = 0;i<Planets.length;i++){
+            Planets[i].draw();
+        }
+        double time = 0;
+        while(time<T){
 
+            double[] xForces = new double[Planets.length];
+            double[] yForces = new double[Planets.length];
+            for (int i = 0; i<Planets.length;i++){
+                xForces[i] = Planets[i].calcNetForceExertedByX(Planets);
+                yForces[i] = Planets[i].calcNetForceExertedByY(Planets);
+            }
+            for (int i = 0; i<Planets.length;i++){
+                Planets[i].update(dt,xForces[i],yForces[i]);
+            }
+            StdDraw.picture(0,0,"/images/starfield.jpg",2*Radius,2*Radius);
+            for(int i = 0;i<Planets.length;i++){
+                Planets[i].draw();
+            }
+            StdDraw.show(10);
+            time = time + dt;
 
+        }
     }
 }
