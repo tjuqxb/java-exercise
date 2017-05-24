@@ -26,12 +26,24 @@ public class NBody{
 
 
     }
+    public static Ship readShip(String stream){
+        In ss = new In(stream);
+        double px = ss.readDouble();
+        double py = ss.readDouble();
+        double vx = ss.readDouble();
+        double vy = ss.readDouble();
+        double ma = ss.readDouble();
+        String img = ss.readString();
+        return new Ship(px,py,vx,vy,ma,img);
+
+    }
     public static void main(String args[]){
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         String filename = args[2];
         double Radius = readRadius(filename);
         Planet[] Planets = readPlanets(filename);
+        Ship ship = new Ship(Planets[1]);
         StdDraw.setScale(-Radius,Radius);
         StdDraw.picture(0,0,"/images/starfield.jpg",2*Radius,2*Radius);
 
@@ -48,13 +60,18 @@ public class NBody{
                 xForces[i] = Planets[i].calcNetForceExertedByX(Planets);
                 yForces[i] = Planets[i].calcNetForceExertedByY(Planets);
             }
+            double shipForce_x = ship.calcNetForceExertedByX(Planets);
+            double shipForce_y = ship.calcNetForceExertedByY(Planets);
             for (int i = 0; i<Planets.length;i++){
                 Planets[i].update(dt,xForces[i],yForces[i]);
             }
+            ship.update(dt,shipForce_x,shipForce_y);
+
             StdDraw.picture(0,0,"/images/starfield.jpg",2*Radius,2*Radius);
             for(int i = 0;i<Planets.length;i++){
                 Planets[i].draw();
             }
+            ship.draw();
             StdDraw.show(10);
             time = time + dt;
 
