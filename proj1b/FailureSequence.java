@@ -29,7 +29,7 @@ public class FailureSequence {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < opSequence.size(); i += 1) {
-            sb.append(opSequence.get(i) + "\n");
+            sb.append(opSequence.get(i).toString() + "\n");
         }
 
         return sb.toString();
