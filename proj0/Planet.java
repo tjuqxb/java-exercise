@@ -6,6 +6,7 @@ public class Planet{
     public double yyVel;
     public double mass;
     public String imgFileName;
+    public boolean isShip;
 
     public Planet(double xPos,double yPos,double xVel,double yVel,double mm,String img){
         this.xxPos = xPos;
@@ -13,6 +14,7 @@ public class Planet{
         this.xxVel = xVel;
         this.yyVel = yVel;
         this.mass = mm;
+        this.isShip = false;
         this.imgFileName = img;
     }                           //initial
 
@@ -71,17 +73,38 @@ public class Planet{
         return y;
     }
 
+    public void turnToShip(){
+        this.isShip = true;
+    }
     public void update(double time,double fx,double fy){
         double ax = fx / this.mass;
         double ay = fy / this.mass;
         this.xxVel = this.xxVel + ax * time;
         this.yyVel = this.yyVel + ay * time;
+        if(this.isShip){
+            double mouseX = StdDraw.mouseX();
+            double mouseY = StdDraw.mouseY();
+            double vecX = mouseX-this.xxPos;
+            double vecY = mouseY-this.yyPos;
+            double vec = Math.pow((Math.pow(vecX,2)+Math.pow(vecY,2)),0.5);
+            double sq_v = Math.pow(this.xxVel,2)+Math.pow(this.yyVel,2);
+            double ac_v = Math.pow(sq_v,0.5);
+            if(StdDraw.mousePressed()){
+                this.xxVel = ac_v*vecX/vec;
+                this.yyVel = ac_v*vecY/vec;
+            }
+        }
+
         this.xxPos = this.xxPos + this.xxVel * time;
         this.yyPos = this.yyPos + this.yyVel * time;
     }
 
     public void draw(){
+        if(this.isShip){
+            StdDraw.picture(xxPos,yyPos,"/images/star_destroyer.gif");
+        } else{
         StdDraw.picture(xxPos,yyPos,"/images/"+imgFileName);
+        }
 
     }
 

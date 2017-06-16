@@ -23,7 +23,7 @@ public class Traveler {
     }
 
     public void printStatus() {
-        System.out.println(name + " gathered " + treasures + " out of " + treasuresGoal + " treasures in "
+                System.out.println(name + " gathered " + treasures + " out of " + treasuresGoal + " treasures in "
                             + hopsTaken + " hops");
     }
 

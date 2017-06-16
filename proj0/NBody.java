@@ -43,7 +43,7 @@ public class NBody{
         String filename = args[2];
         double Radius = readRadius(filename);
         Planet[] Planets = readPlanets(filename);
-        Ship ship = new Ship(Planets[1]);
+
         StdDraw.setScale(-Radius,Radius);
         StdDraw.picture(0,0,"/images/starfield.jpg",2*Radius,2*Radius);
 
@@ -52,6 +52,7 @@ public class NBody{
         }
         StdAudio.loop("audio/2001.mid");
         double time = 0;
+        Planets[1].turnToShip();
         while(time<T){
 
             double[] xForces = new double[Planets.length];
@@ -60,18 +61,17 @@ public class NBody{
                 xForces[i] = Planets[i].calcNetForceExertedByX(Planets);
                 yForces[i] = Planets[i].calcNetForceExertedByY(Planets);
             }
-            double shipForce_x = ship.calcNetForceExertedByX(Planets);
-            double shipForce_y = ship.calcNetForceExertedByY(Planets);
+
             for (int i = 0; i<Planets.length;i++){
                 Planets[i].update(dt,xForces[i],yForces[i]);
             }
-            ship.update(dt,shipForce_x,shipForce_y);
+
 
             StdDraw.picture(0,0,"/images/starfield.jpg",2*Radius,2*Radius);
             for(int i = 0;i<Planets.length;i++){
                 Planets[i].draw();
             }
-            ship.draw();
+
             StdDraw.show(10);
             time = time + dt;
 
